@@ -1,0 +1,9 @@
+The purpose of this project is to get what is essentially a point robot through and obstacle space, trace back the optimal path and then somehow visualize that
+
+I have a main code that resembles code that is designed to resemble the instructions in the report, and I have a function code for things that I don't want to take up sapce in the main code.
+
+The first version of this readme is not going to have much going on as the first version of my code might work, but I can' confirm without any visualization.
+The visualization might be different file as it the main code that finds the optimal path takes long enough to run.
+Also, it is missing the traceback function.
+
+What my code can do is reach the goal node while recording the smallest cost.  It is not a fast fucntion, but hopefully when I graph it, it will work.
