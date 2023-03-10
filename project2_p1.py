@@ -34,13 +34,13 @@ check_i = p2_coll(node_i)
 check_g = p2_coll(node_g)
 if check_i == 0 and check_g == 0:
     print("The initial node and goal nodes are in the obstacle space")
-    res_g = 1
+    exit()
 elif check_i == 0:
     print("The initial node is in the obstacle space")
-    res_g = 1
+    exit()
 elif check_g == 0:
     print("The goal node is in the obstacle space")
-    res_g = 1
+    exit()
 
 # Spreading out and looking
 res_g = 0
@@ -58,6 +58,7 @@ while q1.empty() != uuu and res_g == 0:
     # check if we have reached the goal
     if cur_l == node_g:
         # run the backtrack function
+        node_path = trace_back(q2, cur_p, cur_i)
         print("success")
         res_g = 1
 
@@ -72,13 +73,13 @@ while q1.empty() != uuu and res_g == 0:
             check_ob = p2_coll(new_l)
             check_lm = last_move(i1, cur_lm)
             if check_lm == 0:
-                if check_cl == 0 and check_ob == 1 and check_lm == 0:
+                if check_cl == 0 and check_ob == 1:
                     check_ol = p2_repeat_cl(q1, new_l)
                     if check_ol == 0:
                         id = id + 1
                         new_node = [cur_co + lxu, id, cur_i, i1, new_l, 0]
                         q1.put(new_node)
-                elif check_cl == 1:
+                elif check_cl == 1 and check_ob == 1:
                     m_co = p2_repeat_op(q2, new_l)
                     lenj = q2.qsize()
                     if m_co > (cur_co + lxu):
@@ -86,3 +87,54 @@ while q1.empty() != uuu and res_g == 0:
                             if q2.queue[j1][4] == new_l:
                                 m_i = q2.queue[j1][1]
                                 q2.queue[j1] = [cur_co + lxu, m_i, cur_i, i1, new_l, 0]
+
+# save all explored x and y points
+plt1_size = q2.qsize()
+x_exp1 = []
+y_exp1 = []
+for i1_plot in range(0, plt1_size):
+    x_exp1.append(q2.queue[i1_plot][4][0])
+    y_exp1.append(q2.queue[i1_plot][4][1])
+
+# save the open explored points
+plt2_size = q1.qsize()
+x_exp2 = []
+y_exp2 = []
+for i2_plot in range(0, plt2_size):
+    x_exp2.append(q1.queue[i2_plot][4][0])
+    y_exp2.append(q1.queue[i2_plot][4][1])
+
+# record the path
+len_pa = len(node_path)
+x_pa = []
+y_pa = []
+for i_pa in range(0, len_pa):
+    ind_pa = node_path[i_pa]
+    x_pa.append(q2.queue[ind_pa][4][0])
+    y_pa.append(q2.queue[ind_pa][4][1])
+
+
+# Get all of the points for the buffer or an actual obstacle
+x_obs = []
+y_obs = []
+x_buff = []
+y_buff = []
+for i in range(0, 600):
+    for j in range(0, 250):
+        loc_p = [i, j]
+        if p2_obs(loc_p) == 0:
+            x_obs.append(i)
+            y_obs.append(j)
+        elif p2_coll(loc_p) == 0:
+            x_buff.append(i)
+            y_buff.append(j)
+
+#plotting data
+plt.plot(x_obs, y_obs, 'b.', markersize=1)
+plt.plot(x_buff, y_buff, 'r.', markersize=1)
+plt.plot(x_exp1, y_exp1, 'g.', markersize=1)
+plt.plot(x_exp2, y_exp2, 'g.', markersize=1)
+plt.plot(x_pa, y_pa, 'm.', markersize=5)
+plt.xlim((0, 600))
+plt.ylim((0, 250))
+plt.show()
