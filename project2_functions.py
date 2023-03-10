@@ -49,13 +49,13 @@ def p2_coll(loc):
             work_res = 0
         elif x == 369.95:
             work_res = 1
-        elif 0 <= ((165.39 - y)/(369.95 - x)) >= -sh:
+        elif -sh <= ((165.39 - y)/(369.95 - x)) <= 0:
             work_res = 0
     # Hexagon Bottom Left Triangle
     elif 230.05 <= x <= 300 and 44.22 <= y < 84.61:
         if x == 230.05:
             work_res = 1
-        elif 0 <= ((84.61 - y) / (230.05 - x)) >= -sh:
+        elif -sh <= ((84.61 - y) / (230.05 - x)) <= 0:
             work_res = 0
     # Hexagon Bottom Right Triangle
     elif 300 < x <= 369.95 and 44.22 <= y < 84.61:
@@ -66,17 +66,6 @@ def p2_coll(loc):
 
     return work_res
 
-
-#def p2_repeat(po1, po2):
- #   x1 = po1[0]
-  #  y1 = po1[1]
-   # x2 = po2[0]
-    #y2 = po2[1]
-    #m1 = 0
-    #if x1 == x2 & y1 == y2:
-     #   m1 = 1
-
-    #return m1
 
 def p2_repeat_cl(qu, loc):
     len = qu.qsize()
@@ -132,9 +121,71 @@ def trace_back(q_cl, par, cur_ind):
     while par != 0:
         len = q_cl.qsize()
         for it in range(0, len):
-            if q_cl[it][1] == par:
-                path.append(q_cl[it][2])
-                par = q_cl[it][2]
+            if q_cl.queue[it][1] == par:
+                path.append(q_cl.queue[it][2])
+                par = q_cl.queue[it][2]
     trace_res = reverse_list(path)
 
     return trace_res
+
+
+def p2_obs(loc):
+    work_res = 1
+    x = loc[0]
+    y = loc[1]
+    sh = 1 / np.sqrt(3)
+    # Bottom Rectangle
+    if 100 <= x <= 150 and y <=100:
+        work_res = 0
+    # Top Rectangle
+    elif 100 <= x <= 150 and y >= 150:
+        work_res = 0
+    # Top Part of the Triangle
+    elif 460 <= x <= 510 and 125 <= y <= 225:
+            if x == 510 and y == 125:
+                work_res = 0
+            elif x == 510:
+                work_res = 1
+            elif ((125 - y)/(510 - x)) >= -2:
+                work_res = 0
+    # Bottom Part of the Triangle
+    elif 460 <= x <= 510 and 25 <= y < 125:
+        if x == 510 and y == 125:
+            work_res = 0
+        elif x == 510:
+            work_res = 1
+        elif 0 <= ((125 - y) / (510 - x)) <= 2:
+            work_res = 0
+    # Hexagon Rectangle
+    elif 235.05 <= x <= 364.95 and 87.5 <= y <= 162.5:
+        work_res = 0
+    # Hexagon Top Left Triangle
+    elif 235.05 <= x <= 300 and 162.5 < y <= 200:
+        if x == 235.05 and y == 162.5:
+            work_res = 0
+        elif x == 235.05:
+            work_res = 1
+        elif 0 <= ((162.5 - y)/(235.05 - x)) <= sh:
+            work_res = 0
+    # Hexagon Top Right Triangle
+    elif 300 < x <= 364.95 and 162.5 < y <= 200:
+        if x == 364.95 and y == 162.5:
+            work_res = 0
+        elif x == 364.95:
+            work_res = 1
+        elif -sh <= ((162.5 - y)/(364.95 - x)) <= 0:
+            work_res = 0
+    # Hexagon Bottom Left Triangle
+    elif 235.05 <= x <= 300 and 50 <= y < 87.5:
+        if x == 230.05:
+            work_res = 1
+        elif -sh <= ((87.5 - y) / (235.05 - x)) <= 0:
+            work_res = 0
+    # Hexagon Bottom Right Triangle
+    elif 300 < x <= 364.95 and 50 <= y < 87.5:
+        if x == 364.95:
+            work_res = 1
+        elif 0 <= ((87.5 - y) / (364.95 - x)) <= sh:
+            work_res = 0
+
+    return work_res
