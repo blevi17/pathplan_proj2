@@ -17,8 +17,12 @@ act = [[1, 0, 1], [-1, 0, 1], [0, 1, 1], [0, -1, 1], [1, 1, 1.4], [-1, 1, 1.4], 
 #dl = [-1, -1]  # last move 7
 
 # Initial node and Goal node
-node_i = [10, 10]
-node_g = [530, 200]
+x_i = input("Enter x coordinate of initial position:")
+y_i = input("Enter y coordinate of initial position:")
+x_g = input("Enter x coordinate of goal position:")
+y_g = input("Enter y coordinate of goal position:")
+node_i = [int(x_i), int(y_i)]
+node_g = [int(x_g), int(y_g)]
 
 # Initialize priority q
 q1 = PriorityQueue()
@@ -70,11 +74,12 @@ while q1.empty() != uuu and res_g == 0:
             mov = act[i1]
             lxu = mov[2]
             new_l = [cur_l[0] + mov[0], cur_l[1] + mov[1]]
-            # Check if the new location is in the closed list or obstacle space
-            check_cl = p2_repeat_cl(q2, new_l)
-            check_ob = p2_coll(new_l)
+            # Check the last move so it does not move back and forth
             check_lm = last_move(i1, cur_lm)
             if check_lm == 0:
+                # Check if the new location is in the closed list or obstacle space
+                check_cl = p2_repeat_cl(q2, new_l)
+                check_ob = p2_coll(new_l)
                 if check_cl == 0 and check_ob == 1:
                     check_ol = p2_repeat_cl(q1, new_l)
                     if check_ol == 0:
