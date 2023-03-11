@@ -1,9 +1,30 @@
 The purpose of this project is to get what is essentially a point robot through and obstacle space, trace back the optimal path and then somehow visualize that
 
-I have a main code that resembles code that is designed to resemble the instructions in the report, and I have a function code for things that I don't want to take up sapce in the main code.
+Required packages for all codes
+numpy, queue, matplotlib, and time
 
-The first version of this readme is not going to have much going on as the first version of my code might work, but I can' confirm without any visualization.
-The visualization might be different file as it the main code that finds the optimal path takes long enough to run.
-Also, it is missing the traceback function.
+dijkstra_levi_butler.py
 
-What my code can do is reach the goal node while recording the smallest cost.  It is not a fast fucntion, but hopefully when I graph it, it will work.
+This is the main deliverable project code for project 2.  It does not require an other python files.  The user inputs the initial position, goal position, and animation speed.
+The output is an animation of how the Djikstra algorithm operates.  Animation speed a matter of preference.  I like 100 for very close points and 2000 for very far away points
+Warning, this file could take close to an hour to run if the initial point is very far from the goal point.
+Also, this is a combination of three files mentioned below (project2_functions.py, proj2_p1.py, and proj2_animation.py).
+
+project2_functions.py
+
+This file includes various functions for the codes mentioned below.  They perform tasks such as checking if a point is in the obstacle space and if there is a repeat position in a queue
+
+project2_obs.py
+
+This file outputs .csv files that include the x and y coordinates of the obstacle space and buffer area.  This works with the animation code later
+
+proj2_p1.py
+
+This code is where I originally tested the Dijkstra algorithm.  It takes in the same user inputs, although there is no animation speed.
+The output is a static graph of the obstacle space, buffer are, explored nodes, and optimal path.  It also outputs 3 .csv files.
+These .csv files include x and y coordinates from the closed list, open list, and optimal path.  These are used in the animation file.
+
+proj2_animation.py
+
+This code takes in the five .csv files (included on this Github repository) and plots them as an animation.  It shows the closed loop searching the workspace until the optimal path is found.
+There is not any user input, the .csv files mentioned in the code must be in the same folder.  This was used for the animation .mp4 file.
