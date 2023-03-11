@@ -2,7 +2,9 @@
 from project2_functions import *
 from queue import PriorityQueue
 import matplotlib.pyplot as plt
+import time
 
+start = time.time()
 # Action Set
 act = [[1, 0, 1], [-1, 0, 1], [0, 1, 1], [0, -1, 1], [1, 1, 1.4], [-1, 1, 1.4], [1, -1, 1.4], [-1, -1, 1.4]]
 #r = [1, 0]  # last move 0
@@ -16,7 +18,7 @@ act = [[1, 0, 1], [-1, 0, 1], [0, 1, 1], [0, -1, 1], [1, 1, 1.4], [-1, 1, 1.4], 
 
 # Initial node and Goal node
 node_i = [10, 10]
-node_g = [180, 50]
+node_g = [530, 200]
 
 # Initialize priority q
 q1 = PriorityQueue()
@@ -110,8 +112,10 @@ x_pa = []
 y_pa = []
 for i_pa in range(0, len_pa):
     ind_pa = node_path[i_pa]
-    x_pa.append(q2.queue[ind_pa][4][0])
-    y_pa.append(q2.queue[ind_pa][4][1])
+    for j_pa in range(0, plt1_size):
+        if q2.queue[j_pa][1] == ind_pa:
+            x_pa.append(q2.queue[j_pa][4][0])
+            y_pa.append(q2.queue[j_pa][4][1])
 
 
 # Get all of the points for the buffer or an actual obstacle
@@ -138,3 +142,39 @@ plt.plot(x_pa, y_pa, 'm.', markersize=5)
 plt.xlim((0, 600))
 plt.ylim((0, 250))
 plt.show()
+
+#create a csv file using numpy, q2 -> x_exp1
+ans_p1 = np.zeros((len(x_exp1), 2))
+for i1 in range(0, len(x_exp1)):
+    ans_p1[i1, 0] = x_exp1[i1]
+    ans_p1[i1, 1] = y_exp1[i1]
+
+np.savetxt("proj2_q2.csv",
+           ans_p1,
+           delimiter =", ",
+           fmt ='% s')
+
+#create a csv file using numpy, q1 -> x_exp2
+ans_p2 = np.zeros((len(x_exp2), 2))
+for i2 in range(0, len(x_exp2)):
+    ans_p2[i2, 0] = x_exp2[i2]
+    ans_p2[i2, 1] = y_exp2[i2]
+
+np.savetxt("proj2_q1.csv",
+           ans_p2,
+           delimiter =", ",
+           fmt ='% s')
+
+#create a csv file using numpy, path -> x_pa
+ans_p3 = np.zeros((len(x_pa), 2))
+for i2 in range(0, len(x_pa)):
+    ans_p3[i2, 0] = x_pa[i2]
+    ans_p3[i2, 1] = y_pa[i2]
+
+np.savetxt("proj2_pa.csv",
+           ans_p3,
+           delimiter =", ",
+           fmt ='% s')
+
+end = time.time()
+print(end - start)
